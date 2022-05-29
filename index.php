@@ -1,7 +1,7 @@
 <?php
 require 'functions.php';
 
-$comic = query("SELECT * FROM comics");
+$dataComics = query("SELECT * FROM comics");
 
 ?>
 <!doctype html>
@@ -9,15 +9,15 @@ $comic = query("SELECT * FROM comics");
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta a="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col d-flex justify-content-center">
+        <div class="row mt-5">
+            <div class="col">
                 <a href="add.php" class="btn btn-success px-5">Tambah Data</a>
             </div>
         </div>
@@ -38,17 +38,17 @@ $comic = query("SELECT * FROM comics");
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        <?php foreach ($comic as $row) : ?>
+                        <?php foreach ($dataComics as $data) : ?>
                             <tr>
-                                <th scope="row"><?= $i++; ?></th>
-                                <td><?= $row["name"]; ?></td>
-                                <td><?= $row["author"]; ?></td>
-                                <td><?= $row["genre"]; ?></td>
-                                <td><?= $row["status"]; ?></td>
-                                <td><img src="<?= $row["gambar"]; ?>"></td>
+                                <th scope="data"><?= $i++; ?></th>
+                                <td><?= $data["nama"]; ?></td>
+                                <td><?= $data["author"]; ?></td>
+                                <td><?= $data["genre"]; ?></td>
+                                <td><?= $data["statuss"]; ?></td>
+                                <td><img src="<?= $data["gambar"]; ?>"></td>
                                 <td>
-                                    <a href="">Edit</a>
-                                    <a href="delete.php?id=<?= $row["id"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a href="edit.php?id=<?= $data["id"]; ?>">Edit</a>
+                                    <a href="delete.php?id=<?= $data["id"]; ?>" onclick="return confirm('Are you sure?')">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

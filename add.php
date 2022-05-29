@@ -2,10 +2,19 @@
 require 'functions.php';
 if (isset($_POST["submit"])) {
     if (addComic($_POST) > 0) {
-        echo "Success";
-        header("index.php");
+        echo "
+        <script>
+        alert('success');
+        document.location.href = 'index.php';
+        </script>
+        ";
     } else {
-        echo "Failed";
+        echo "
+        <script>
+        alert('failed');
+        document.location.href = 'index.php';
+        </script>
+        ";
     }
 }
 
@@ -28,7 +37,7 @@ if (isset($_POST["submit"])) {
                 <form action="" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" required>
+                        <input type="text" name="nama" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Author</label>
@@ -40,14 +49,14 @@ if (isset($_POST["submit"])) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Status</label>
-                        <input type="text" name="status" class="form-control" required>
+                        <input type="text" name="statuss" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Gambar</label>
                         <input type="text" name="gambar" class="form-control" required>
                     </div>
                     <div class="mb-3 text-center">
-                        <button type="Submit" name="submit" class="btn btn-lg btn-success">Add Comic</button>
+                        <button type="Submit" name="submit" class="btn btn-lg btn-success">Update Comic</button>
                     </div>
                 </form>
             </div>

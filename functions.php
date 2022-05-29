@@ -16,13 +16,13 @@ function query($query)
 function addComic($data)
 {
     global $conn;
-    $name = htmlspecialchars($data["name"]);
+    $nama = htmlspecialchars($data["nama"]);
     $author = htmlspecialchars($data["author"]);
     $genre = htmlspecialchars($data["genre"]);
-    $status = htmlspecialchars($data["status"]);
+    $statuss = htmlspecialchars($data["statuss"]);
     $gambar = htmlspecialchars($data["gambar"]);
 
-    $query = "INSERT INTO comics VALUES ('', '$name', '$author', '$genre', '$status', '$gambar')";
+    $query = "INSERT INTO comics VALUES ('', '$nama', '$author', '$genre', '$statuss', '$gambar')";
 
     mysqli_query($conn, $query);
 
@@ -33,5 +33,29 @@ function delete($id)
 {
     global $conn;
     mysqli_query($conn, "DELETE FROM comics WHERE id = $id");
+    return mysqli_affected_rows($conn);
+}
+
+function update($data)
+{
+    global $conn;
+    $id = $data["id"];
+    $nama = htmlspecialchars($data["nama"]);
+    $author = htmlspecialchars($data["author"]);
+    $genre = htmlspecialchars($data["genre"]);
+    $statuss = htmlspecialchars($data["statuss"]);
+    $gambar = htmlspecialchars($data["gambar"]);
+
+    $query = "UPDATE comics SET
+        nama = '$nama',
+        author = '$author',
+        genre = '$genre',
+        statuss = '$statuss',
+        gambar = '$gambar'
+        WHERE id = $id
+        ";
+
+    mysqli_query($conn, $query);
+
     return mysqli_affected_rows($conn);
 }
