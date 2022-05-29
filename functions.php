@@ -59,3 +59,15 @@ function update($data)
 
     return mysqli_affected_rows($conn);
 }
+
+function find($keyword)
+{
+    $query = "SELECT * FROM comics WHERE 
+    nama LIKE '%$keyword%' OR
+    author LIKE '%$keyword%' OR
+    genre LIKE '%$keyword%' OR
+    statuss LIKE '%$keyword%' OR
+    gambar LIKE '%$keyword%'
+    ";
+    return query($query);
+}

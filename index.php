@@ -2,6 +2,9 @@
 require 'functions.php';
 
 $dataComics = query("SELECT * FROM comics");
+if (isset($_POST["search"])) {
+    $dataComics = find($_POST["keyword"]);
+}
 
 ?>
 <!doctype html>
@@ -19,6 +22,16 @@ $dataComics = query("SELECT * FROM comics");
         <div class="row mt-5">
             <div class="col">
                 <a href="add.php" class="btn btn-success px-5">Tambah Data</a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <form action="" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" name="keyword" class="form-control" placeholder="Searching Comics ...">
+                        <button class="btn btn-outline-secondary" type="submit" name="search">Search</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row mt-2">
