@@ -34,7 +34,7 @@ if (isset($_POST["submit"])) {
         <div class="row mt-5">
             <h1>Add Comics Form</h1>
             <div class="col">
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Name</label>
                         <input type="text" name="nama" class="form-control" required>
@@ -53,10 +53,10 @@ if (isset($_POST["submit"])) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Gambar</label>
-                        <input type="text" name="gambar" class="form-control" required>
+                        <input type="file" name="gambar" class="form-control">
                     </div>
                     <div class="mb-3 text-center">
-                        <button type="Submit" name="submit" class="btn btn-lg btn-success">Update Comic</button>
+                        <button type="Submit" name="submit" class="btn btn-lg btn-success">Add Comic</button>
                     </div>
                 </form>
             </div>

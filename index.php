@@ -58,6 +58,7 @@ if (isset($_POST["search"])) {
                                 <td><?= $data["author"]; ?></td>
                                 <td><?= $data["genre"]; ?></td>
                                 <td><?= $data["statuss"]; ?></td>
+                                <!-- src ganti ke img/ kalau mau pake img dari fodler img -->
                                 <td><img src="<?= $data["gambar"]; ?>"></td>
                                 <td>
                                     <a href="edit.php?id=<?= $data["id"]; ?>">Edit</a>

@@ -39,8 +39,9 @@ if (isset($_POST["submit"])) {
             <h1>Edit Comics Form</h1>
             <div class="col">
                 <?php foreach ($dataComics as $data) : ?>
-                    <form action="" method="POST">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?= $data["id"]; ?>">
+                        <input type="hidden" name="oldImage" value="<?= $data["gambar"]; ?>">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
                             <input type="text" name="nama" class="form-control" value="<?= $data["nama"]; ?>" required>
@@ -59,10 +60,11 @@ if (isset($_POST["submit"])) {
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Gambar</label>
-                            <input type="text" name="gambar" class="form-control" value="<?= $data["gambar"]; ?>" required>
+                            <img src="<?= $data["gambar"]; ?>" alt="">
+                            <input type="file" name="gambar" class="form-control">
                         </div>
                         <div class="mb-3 text-center">
-                            <button type="Submit" name="submit" class="btn btn-lg btn-success">Add Comic</button>
+                            <button type="Submit" name="submit" class="btn btn-lg btn-success">Update Comic</button>
                         </div>
                     </form>
                 <?php endforeach; ?>

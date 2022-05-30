@@ -13,6 +13,56 @@ function query($query)
     return $rows;
 }
 
+function upload()
+{
+    $nameFile = $_FILES['gambar']['name'];
+    $sizeFile = $_FILES['gambar']['size'];
+    $error = $_FILES['gambar']['error'];
+    $tempName = $_FILES['gambar']['tmp_name'];
+    // check if image uploaded or not
+    if ($error === 4) {
+        echo  "
+        <script>
+        alert('Choose File First!');
+        </script>
+        ";
+        return false;
+    }
+
+    // check only image uploaded
+    $extensionImgValidation = ['jpg', 'jpeg', 'png'];
+    $extensionImg = explode('.', $nameFile);
+    $extensionImg = strtoLower(end($extensionImg));
+
+    if (!in_array($extensionImg, $extensionImgValidation)) {
+        echo  "
+        <script>
+        alert('file uploaded not image!');
+        </script>
+        ";
+        return false;
+    }
+
+    // if file size to large
+    if ($sizeFile > 1000000) {
+        echo  "
+        <script>
+        alert('file uploaded size to large!');
+        </script>
+        ";
+        return false;
+    }
+
+    // generate new image files for duplicate issue
+    $newNameFile = uniqid();
+    $newNameFile .= '.';
+    $newNameFile .= $extensionImg;
+
+    // after image validated
+    move_uploaded_file($tempName, 'img/' . $newNameFile);
+    return $newNameFile;
+}
+
 function addComic($data)
 {
     global $conn;
@@ -20,7 +70,13 @@ function addComic($data)
     $author = htmlspecialchars($data["author"]);
     $genre = htmlspecialchars($data["genre"]);
     $statuss = htmlspecialchars($data["statuss"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+    // $gambar = htmlspecialchars($data["gambar"]);
+
+    // upload gambar
+    $gambar = upload();
+    if (!$gambar) {
+        return false;
+    }
 
     $query = "INSERT INTO comics VALUES ('', '$nama', '$author', '$genre', '$statuss', '$gambar')";
 
@@ -44,7 +100,16 @@ function update($data)
     $author = htmlspecialchars($data["author"]);
     $genre = htmlspecialchars($data["genre"]);
     $statuss = htmlspecialchars($data["statuss"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+    $oldImage = $data["oldImage"];
+
+
+    // check if user pick new image or not
+    if ($_FILES['gambar']['error'] === 4) {
+        $gambar = $oldImage;
+    } else {
+        $gambar = upload();
+    }
+
 
     $query = "UPDATE comics SET
         nama = '$nama',
