@@ -136,3 +136,48 @@ function find($keyword)
     ";
     return query($query);
 }
+
+function register($data)
+{
+    global $conn;
+    $username = strtolower(stripslashes($data["username"]));
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $confirmPass = mysqli_real_escape_string($conn, $data["confirmpass"]);
+
+    //check username duplicate or not
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+    if (mysqli_fetch_assoc($result)) {
+        echo  "
+        <script>
+        alert('username already used!');
+        </script>
+        ";
+        return false;
+    }
+
+    // check confirm password
+    if ($password !== $confirmPass) {
+        echo  "
+        <script>
+        alert('Password not same as confirm password');
+        </script>
+        ";
+        return false;
+    } else {
+        echo mysqli_error($conn);
+    }
+
+    // ecryp password
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    //insert into db
+    $query = "INSERT INTO users VALUE(
+        '',
+        '$username',
+        '$password')
+        ";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
