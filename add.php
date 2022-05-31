@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+
+// if dont have session, not login yet
+if (!isset($_SESSION["login"])) {
+    header("Location:login.php");
+    exit();
+}
+
 require 'functions.php';
 if (isset($_POST["submit"])) {
     if (addComic($_POST) > 0) {

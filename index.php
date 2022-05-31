@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// if dont have session, not login yet
+if (!isset($_SESSION["login"])) {
+    header("Location:login.php");
+    exit();
+}
+
 require 'functions.php';
 
 $dataComics = query("SELECT * FROM comics");
@@ -22,6 +30,7 @@ if (isset($_POST["search"])) {
         <div class="row mt-5">
             <div class="col">
                 <a href="add.php" class="btn btn-success px-5">Tambah Data</a>
+                <a href="logout.php" class="btn btn-warning px-5">Logout</a>
             </div>
         </div>
         <div class="row mt-3">

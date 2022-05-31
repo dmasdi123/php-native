@@ -1,6 +1,28 @@
 <?php
-
+session_start();
 require 'functions.php';
+
+// check cookie
+if (isset($_COOKIE["id"]) && isset($_COOKIE["key"])) {
+    $id = $_COOKIE["id"];
+    $key = $_COOKIE["key"];
+
+    // get username by id
+    $query = "SELECT * FROM users WHERE id ='$id'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    // check cookie and username
+    if ($key === hash('sha256', $row["username"])) {
+        $_SESSION["login"] = true;
+    }
+}
+
+// check session if already login
+if (isset($_SESSION["login"])) {
+    header("Location:index.php");
+    exit();
+}
 
 if (isset($_POST["login"])) {
     $username = $_POST["username"];
@@ -14,6 +36,14 @@ if (isset($_POST["login"])) {
         $row = mysqli_fetch_assoc($result);
         // check password
         if (password_verify($password, $row["password"])) {
+            // set session
+            $_SESSION["login"] = true;
+
+            // check remember me then set cookie
+            if (isset($_POST["rememberme"])) {
+                setcookie('id', $row["id"], time() + 60);
+                setcookie('key', hash('sha256', $row["username"]), time() + 60);
+            }
             header("Location:index.php");
             exit;
         }
@@ -47,6 +77,12 @@ if (isset($_POST["login"])) {
                     </div>
                     <div class="mb-3">
                         <button type="submit" name="login" class="btn btn-success">Login</button>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="rememberMe">
+                            Remember Me
+                        </label>
+                        <input class="form-check-input" name="rememberme" type="checkbox" value="" id="rememberMe">
                     </div>
                 </form>
             </div>
